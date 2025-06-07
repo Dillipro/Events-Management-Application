@@ -1,9 +1,8 @@
-import { useState } from 'react'
-
+import React, { useState } from 'react';
 function App() {
   return (
     <>
-     <div>hello</div>
+      <div>hello</div>
     </>
   )
 }
