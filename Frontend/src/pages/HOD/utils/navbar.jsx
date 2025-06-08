@@ -21,7 +21,8 @@ const NavbarHod = ({activePage, setActivePage}) => {
         padding:"6px",
         boxShadow:'0px 2px 12px rgba(0, 0, 0, 0.2)',
         display:"flex",
-        alignItems:"center"
+        alignItems:"center",
+        position:"sticky",
       }}
       
     > 
