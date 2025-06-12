@@ -5,13 +5,42 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { eventState } from "../../context/eventProvider";
 
 const Overview = ({ activePage, setActivePage }) => {
-  const name = "kumar";
-  const num = 10;
-  const user = JSON.parse(localStorage.getItem("userInfo"));
+  const num = 4;
 
-  
+  const {user, events, setEvents} = eventState();
+
+  function approvedCount(){
+    let count = 0;
+    for(let i=0;i<events.length;i++){
+      if(events[i].status === "approved"){
+        count++;
+      }   
+    }
+    return count;
+  }
+
+  function pendingCount(){
+    let count = 0;
+        for(let i=0;i<events.length;i++){
+          if(events[i].status === "pending"){
+            count++;
+          }   
+        }
+    return count;
+  }
+
+  function rejectedCount(){
+    let count = 0;
+            for(let i=0;i<events.length;i++){
+              if(events[i].status === "rejected"){
+                count++;
+              }   
+            }
+    return count;
+  }
 
   return (
     <Box
@@ -47,7 +76,7 @@ const Overview = ({ activePage, setActivePage }) => {
             fontWeight: "bold",
           }}
         >
-          {`Welcome back, DR.${user.name}`}
+          {`Welcome back, DR.${user && user.name}`}
         </Typography>
         <Typography
           sx={{
@@ -107,7 +136,7 @@ const Overview = ({ activePage, setActivePage }) => {
             }}
           >
             <Typography fontSize="22px" fontWeight="600">
-              {num}
+              {events.length}
             </Typography>
             <Box
               sx={{
@@ -160,7 +189,7 @@ const Overview = ({ activePage, setActivePage }) => {
             }}
           >
             <Typography fontSize="22px" fontWeight="600">
-              {num}
+              {approvedCount()}
             </Typography>
             <Box
               sx={{
@@ -214,7 +243,7 @@ const Overview = ({ activePage, setActivePage }) => {
             }}
           >
             <Typography fontSize="22px" fontWeight="600">
-              {num}
+              {pendingCount()}
             </Typography>
             <Box
               sx={{
@@ -271,7 +300,7 @@ const Overview = ({ activePage, setActivePage }) => {
             }}
           >
             <Typography fontSize="22px" fontWeight="600" >
-              {num}
+              {rejectedCount()}
             </Typography>
             <Box
               sx={{

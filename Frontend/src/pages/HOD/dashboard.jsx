@@ -5,11 +5,12 @@ import Proposals from "./proposals";
 import ApprovedEvents from "./approvedEvents";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { eventState } from "../../context/eventProvider";
 
 const HodDashboard = () => {
   
   const [activePage, setActivePage] = useState("overview");
-  const [events, setEvents] = useState([]);
+  const {user, events, setEvents} = eventState();
 
   function fetchAllEvents(){
     
@@ -26,7 +27,6 @@ const HodDashboard = () => {
       })
       .then(res => res.json())
       .then(data =>{
-        console.log(data);
         setEvents(data);
       })
 

@@ -1,0 +1,362 @@
+import { useState } from 'react';
+import { eventState } from '../../../context/eventProvider'
+import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
+import { getDate } from './getDate';
+import { getCurrency } from './getCurrency';
+import Button from '@mui/material/Button';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
+import DownloadIcon from '@mui/icons-material/Download';
+import ViewContentModal from './viewContentModal';
+import CommentModal from './commentModal';
+import DownloadPDF from './downloadEventDetails';
+
+const EventOverviewCard = ({event}) => {
+
+  const [open, setOpen] = useState(false);
+  const [commentOpen, setCommentOpen] = useState(false);
+
+  function handleOpen(){setOpen(true);}
+  const handleClose = () => setOpen(false);
+
+  const handleCommentOpen = () => setCommentOpen(true);
+  const handleCommentClose = () => setCommentOpen(false);
+
+  const eventData = {
+      eventName: "Annual Tech Fest",
+      date: "2025-06-15",
+      organizer: "Dept. of CSE",
+      venue: "Main Auditorium",
+      description: "A grand event showcasing student innovations."
+    };
+
+  return (
+    <Box
+      sx={{
+        display:"flex",
+        borderRadius:"2px",
+        justifyContent:"space-between",
+        borderColor:"black",
+        p:3,
+        mr:2,
+        bgcolor:"rgb(249, 249, 249)",
+        boxShadow:'0px 2px 12px rgba(0, 0, 0, 0.2)',
+      }}
+    >
+      <Box
+        sx={{
+            width:{
+              xs:200,
+              sm:200,
+              md:350,
+              lg:400,
+            },
+            mr:1,
+          }}
+      > 
+        <Box>
+          <Typography sx={{
+            fontWeight:"500", 
+            fontSize:16, 
+            mb:1,
+            textOverflow:"true",
+            }}>{event.title.toUpperCase()}</Typography>
+          <Typography>{getDate(event.startDate)}</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{
+            width:{
+              xs:200,
+              sm:200,
+              md:350,
+              lg:400,
+            },
+            mr:1,
+          }}>
+         <Box>
+          <Typography
+            sx={{
+              
+            }}
+          >{event.createdBy.name}</Typography>
+          <Typography
+            sx={{
+              color:"grey",
+              fontSize:"14px"
+            }}
+          >{event.createdBy.email}</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{
+            width:{
+              xs:200,
+              sm:200,
+              md:350,
+              lg:400,
+            },
+            mr:1,
+          }}>
+        <Box>
+          <Typography>{getDate(event.startDate)}</Typography>
+          <Typography
+            sx={{
+              color:"grey",
+              fontSize:"14px"
+            }}
+          >{event.venue}</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{
+            width:{
+              xs:200,
+              sm:200,
+              md:350,
+              lg:400,
+            },
+            mr:1,
+          }}>
+        <Box>
+          <Typography>{getCurrency(event.budget)}</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{
+            width:{
+              xs:200,
+              sm:200,
+              md:350,
+              lg:400,
+            },
+            mr:1,
+          }}>
+        <Box>
+          {
+            event.status === 'approved' &&
+            (<Button
+              sx={{
+                color:"rgb(31, 126, 5)",
+                bgcolor:"rgb(178, 231, 163)",
+                width:"18px",
+                height:"18px",
+                fontSize:"10px",
+                fontWeight:"bold",
+                borderRadius:"10px",
+                pt:1,
+                textTransform: "none",
+              }}
+            >Approved</Button>)
+          }
+          {
+            event.status === 'rejected' &&
+            (<Button
+              sx={{
+                color:"rgb(126, 5, 5)",
+                bgcolor:"rgb(225, 184, 184)",
+                width:"18px",
+                height:"18px",
+                fontSize:"10px",
+                fontWeight:"bold",
+                borderRadius:"10px",
+                pt:1,
+                textTransform: "none",
+              }}
+            >Rejected</Button>)
+          }
+          {
+            event.status === 'pending' &&
+            (
+            <Box>
+            <Button
+              sx={{
+                color:"rgb(126, 98, 5)",
+                bgcolor:"rgb(225, 205, 184)",
+                width:"18px",
+                height:"18px",
+                fontSize:"10px",
+                fontWeight:"bold",
+                borderRadius:"10px",
+                pt:1,
+                textTransform: "none",
+              }}
+            >Pending</Button>
+
+            <Button
+              sx={{
+                color:"rgb(5, 86, 126)",
+                bgcolor:"rgb(184, 223, 225)",
+                width:"10px",
+                height:"18px",
+                fontSize:"10px",
+                fontWeight:"bold",
+                borderRadius:"10px",
+                pt:1,
+                ml:1,
+                textTransform: "none",
+              }}
+            >New</Button>
+            </Box>)
+          }
+        </Box>
+      </Box>
+
+      <Box sx={{
+            width:{
+              xs:200,
+              sm:200,
+              md:350,
+              lg:400,
+            },
+            mr:1,
+          }}>
+        <Box>
+          {
+            event.status === 'approved' &&(
+              <Box
+                sx={{
+                }}
+              >
+                <IconButton onClick={handleOpen}>
+                  <RemoveRedEyeIcon
+                    sx={{
+                      color:"rgb(137, 144, 222)"
+                    }}
+                  ></RemoveRedEyeIcon>
+                </IconButton>
+
+                <IconButton onClick={handleCommentOpen}>
+                  <CommentIcon
+                    sx={{
+                      color:"rgb(182, 182, 187)"
+                    }}
+                  ></CommentIcon>
+                </IconButton>
+
+                <IconButton onClick={()=>DownloadPDF(eventData)}>
+                  <DownloadIcon
+                    sx={{
+                      color:"rgb(73, 73, 74)"
+                    }}
+                  ></DownloadIcon>
+                </IconButton>
+                    
+                <ViewContentModal 
+                  event={event}
+                  open={open}
+                  handleClose={handleClose}
+                  >
+                </ViewContentModal>
+
+                <CommentModal
+                  open={commentOpen}
+                  handleClose={handleCommentClose}
+                >
+                </CommentModal>
+              </Box>  
+            )
+          }
+          {
+            event.status === 'rejected' &&(
+              <Box
+                sx={{
+                }}
+              >
+                <IconButton onClick={handleOpen}>
+                  <RemoveRedEyeIcon
+                    sx={{
+                      color:"rgb(137, 144, 222)"
+                    }}
+                  ></RemoveRedEyeIcon>
+                </IconButton>
+
+                <IconButton onClick={handleCommentOpen}>
+                  <CommentIcon
+                    sx={{
+                      color:"rgb(182, 182, 187)"
+                    }}
+                  ></CommentIcon>
+                </IconButton>
+
+                <IconButton onClick={()=>DownloadPDF(eventData)}>
+                  <DownloadIcon
+                    sx={{
+                      color:"rgb(73, 73, 74)"
+                    }}
+                  ></DownloadIcon>
+                </IconButton>
+
+                <ViewContentModal 
+                  event={event}
+                  open={open}
+                  handleOpen={handleOpen}
+                  handleClose={handleClose}
+                  >
+                </ViewContentModal>
+
+                <CommentModal
+                  open={commentOpen}
+                  handleClose={handleCommentClose}
+                >
+                </CommentModal>
+              </Box>  
+            )
+          }
+
+          {
+            event.status === 'pending' &&(
+              <Box
+                sx={{
+                }}
+              >
+                <IconButton onClick={handleOpen}>
+                  <RemoveRedEyeIcon
+                    sx={{
+                      color:"rgb(137, 144, 222)"
+                    }}
+                  ></RemoveRedEyeIcon>
+                </IconButton>
+
+                <IconButton onClick={handleCommentOpen}>
+                  <CommentIcon
+                    sx={{
+                      color:"rgb(182, 182, 187)"
+                    }}
+                  ></CommentIcon>
+                </IconButton>
+
+                <IconButton onClick={()=>DownloadPDF(eventData)}>
+                  <DownloadIcon
+                    sx={{
+                      color:"rgb(73, 73, 74)"
+                    }}
+                  ></DownloadIcon>
+                </IconButton>
+
+                <ViewContentModal 
+                  event={event}
+                  open={open}
+                  handleOpen={handleOpen}
+                  handleClose={handleClose}
+                  >
+                </ViewContentModal>
+
+                <CommentModal
+                  open={commentOpen}
+                  handleClose={handleCommentClose}
+                >
+                </CommentModal>
+              </Box>  
+            )
+          }
+          
+        </Box>
+      </Box>
+    </Box>
+  )
+}
+
+export default EventOverviewCard;
