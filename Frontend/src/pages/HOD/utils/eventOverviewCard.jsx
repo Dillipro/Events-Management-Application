@@ -26,6 +26,18 @@ const EventOverviewCard = ({event}) => {
   const handleCommentOpen = () => setCommentOpen(true);
   const handleCommentClose = () => setCommentOpen(false);
 
+  function approveEvent(){
+    console.log();
+  }
+
+  function rejectEvent(){
+    console.log();
+  }
+
+  function addComment(){
+    
+  }
+
   const eventData = {
       eventName: "Annual Tech Fest",
       date: "2025-06-15",
