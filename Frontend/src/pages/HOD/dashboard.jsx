@@ -1,11 +1,12 @@
 import { useState, useEffect,createContext } from "react";
 import NavbarHod from "./utils/navbar";
-import Overview from "./overview";
-import Proposals from "./proposals";
-import ApprovedEvents from "./approvedEvents";
+import Overview from "./drawerPages/overview";
+import Proposals from "./drawerPages/proposals";
+import ApprovedEvents from "./drawerPages/approvedEvents";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { eventState } from "../../context/eventProvider";
+import PendingProposals from "./drawerPages/pendingProposals";
 
 const HodDashboard = () => {
   
@@ -56,6 +57,7 @@ const HodDashboard = () => {
         )}
         {activePage === "proposal" && <Proposals />}
         {activePage === "approved" && <ApprovedEvents />}
+        {activePage === "pendingProposal" && <PendingProposals/>}
       </Box>
     </Box>
   );

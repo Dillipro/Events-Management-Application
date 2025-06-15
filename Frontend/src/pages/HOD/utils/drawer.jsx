@@ -28,6 +28,11 @@ export default function TemporaryDrawer({
     onClose();
   }
 
+  function handlePendingProposals(){
+    setActivePage("pendingProposal");
+    onClose();
+  }
+
   function handleLogOut() {
     onClose();
   }
@@ -46,7 +51,7 @@ export default function TemporaryDrawer({
           onClick={handleOverview}
           sx={{ margin: "4px", cursor: "pointer" }}
         >
-          <ListItemText primary="Dashboard Overview" />
+          <ListItemText primary="Dashboard" />
         </ListItem>
 
         <ListItem
@@ -63,6 +68,14 @@ export default function TemporaryDrawer({
           onClick={handleApproved}
         >
           <ListItemText primary="Approved Events" />
+        </ListItem>
+
+        <ListItem
+          sx={{ margin: "4px", cursor: "pointer" }}
+          button
+          onClick={handlePendingProposals}
+        >
+          <ListItemText primary="Pending Proposals" />
         </ListItem>
 
         <ListItem

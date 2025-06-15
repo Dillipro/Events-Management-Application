@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { eventState } from "../../context/eventProvider";
-import EventOverviewCard from "./utils/eventOverviewCard";
+import { eventState } from "../../../context/eventProvider";
+import EventOverviewCard from "../utils/eventOverviewCard";
 const Proposals = () => {
 
   const {user, events, setEvents} = eventState();

@@ -5,10 +5,9 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { eventState } from "../../context/eventProvider";
+import { eventState } from "../../../context/eventProvider";
 
 const Overview = ({ activePage, setActivePage }) => {
-  const num = 4;
 
   const {user, events, setEvents} = eventState();
 

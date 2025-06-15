@@ -12,6 +12,8 @@ import DownloadIcon from '@mui/icons-material/Download';
 import ViewContentModal from './viewContentModal';
 import CommentModal from './commentModal';
 import DownloadPDF from './downloadEventDetails';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const EventOverviewCard = ({event}) => {
 
@@ -170,35 +172,41 @@ const EventOverviewCard = ({event}) => {
           {
             event.status === 'pending' &&
             (
-            <Box>
-            <Button
-              sx={{
-                color:"rgb(126, 98, 5)",
-                bgcolor:"rgb(225, 205, 184)",
-                width:"18px",
-                height:"18px",
-                fontSize:"10px",
-                fontWeight:"bold",
-                borderRadius:"10px",
-                pt:1,
-                textTransform: "none",
-              }}
-            >Pending</Button>
-
-            <Button
-              sx={{
-                color:"rgb(5, 86, 126)",
-                bgcolor:"rgb(184, 223, 225)",
-                width:"10px",
-                height:"18px",
-                fontSize:"10px",
-                fontWeight:"bold",
-                borderRadius:"10px",
-                pt:1,
-                ml:1,
-                textTransform: "none",
-              }}
-            >New</Button>
+            <Box sx={{
+              
+            }}>
+              <Button
+                sx={{
+                  color:"rgb(126, 98, 5)",
+                  bgcolor:"rgb(225, 205, 184)",
+                  width:"18px",
+                  height:"18px",
+                  fontSize:"10px",
+                  fontWeight:"bold",
+                  borderRadius:"10px",
+                  pt:1,
+                  textTransform: "none",
+                }}
+              >Pending</Button>
+              
+              <Box>
+                  <IconButton>
+                    <CheckCircleOutlineIcon
+                    sx={{
+                      color:"green",
+                           
+                    }}
+                    ></CheckCircleOutlineIcon>
+                    </IconButton>
+                    <IconButton>
+                    <HighlightOffIcon
+                    sx={{
+                      color:"rgb(185, 20, 11)",
+                      
+                    }}>
+                    </HighlightOffIcon>
+                  </IconButton>
+               </Box>
             </Box>)
           }
         </Box>
@@ -308,6 +316,7 @@ const EventOverviewCard = ({event}) => {
 
           {
             event.status === 'pending' &&(
+              <Box>
               <Box
                 sx={{
                 }}
@@ -349,7 +358,9 @@ const EventOverviewCard = ({event}) => {
                   handleClose={handleCommentClose}
                 >
                 </CommentModal>
-              </Box>  
+              </Box> 
+              
+              </Box> 
             )
           }
           
