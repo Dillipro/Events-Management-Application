@@ -3,10 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import Textarea from "@mui/material/TextField";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useSnackbar } from "./useSnackbar";
+import { eventState } from "../../../context/eventProvider";
 
 const style = {
   position: "absolute",
@@ -20,25 +20,53 @@ const style = {
   p: 4,
 };
 
-function CommentModal({ open, handleClose }) {
-
+function CommentModal({ event, open, handleClose }) {
   const { showSnackbar } = useSnackbar();
   const showMessage = (msg, status) => {
     showSnackbar(msg, status);
   };
 
+  const { user, events, setEvents } = eventState();
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmitComment = () => {
+  const handleSubmitComment = (id) => {
     if (!comment) {
-      showMessage('enter comments', 'warning');
+      showMessage("enter comments", "warning");
       return;
     }
-    console.log(comment);
 
-    
+    const token = localStorage.getItem("token");
+    setLoading(true);
+
+    fetch("http://localhost:5050/hod/event/comment", {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        eventId: id,
+        comment: comment,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setEvents((preEvents) =>
+          preEvents.map((item) => (item._id === data._id ? data : item))
+        );
+        showMessage("comment uploaded!", "success");
+        console.log(data);
+      })
+      .catch((error) => {
+        showMessage("error in uploading comment", "error");
+        console.log(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+        setComment("");
+      });
   };
-
 
   return (
     <div>
@@ -50,7 +78,7 @@ function CommentModal({ open, handleClose }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add comments
+            Add/Update comments
           </Typography>
           <Box id="modal-modal-description" sx={{ mt: 2 }}>
             <TextField
@@ -78,12 +106,14 @@ function CommentModal({ open, handleClose }) {
               }}
             />
 
-            <Button onClick={handleSubmitComment} variant="contained" sx={{ mt: 2 }}>
+            <Button
+              loading={loading}
+              onClick={() => handleSubmitComment(event._id)}
+              variant="contained"
+              sx={{ mt: 2 }}
+            >
               Submit
             </Button>
-
-            
-              
           </Box>
         </Box>
       </Modal>

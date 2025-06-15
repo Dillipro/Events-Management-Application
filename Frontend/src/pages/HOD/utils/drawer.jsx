@@ -33,6 +33,11 @@ export default function TemporaryDrawer({
     onClose();
   }
 
+  function handleFinance(){
+    setActivePage("finance");
+    onClose();
+  }
+
   function handleLogOut() {
     onClose();
   }
@@ -76,6 +81,14 @@ export default function TemporaryDrawer({
           onClick={handlePendingProposals}
         >
           <ListItemText primary="Pending Proposals" />
+        </ListItem>
+
+        <ListItem
+          sx={{ margin: "4px", cursor: "pointer" }}
+          button
+          onClick={handleFinance}
+        >
+          <ListItemText primary="Finance View" />
         </ListItem>
 
         <ListItem

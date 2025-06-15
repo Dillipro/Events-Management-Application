@@ -43,7 +43,6 @@ const EventOverviewCard = ({ event }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setEvents((preEvents) =>
           preEvents.map((item) => (item._id === data._id ? data : item))
         );
@@ -70,7 +69,6 @@ const EventOverviewCard = ({ event }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setEvents((preEvents) =>
           preEvents.map((item) => (item._id === data._id ? data : item))
         );
@@ -83,9 +81,6 @@ const EventOverviewCard = ({ event }) => {
       });
   }
 
-  function addComment() {
-    console.log("comment");
-  }
 
   const eventData = {
     eventName: "Annual Tech Fest",
@@ -329,6 +324,7 @@ const EventOverviewCard = ({ event }) => {
               ></ViewContentModal>
 
               <CommentModal
+                event={event}
                 open={commentOpen}
                 handleClose={handleCommentClose}
               ></CommentModal>
@@ -368,6 +364,7 @@ const EventOverviewCard = ({ event }) => {
               ></ViewContentModal>
 
               <CommentModal
+                event={event}
                 open={commentOpen}
                 handleClose={handleCommentClose}
               ></CommentModal>
@@ -409,6 +406,7 @@ const EventOverviewCard = ({ event }) => {
                 ></ViewContentModal>
 
                 <CommentModal
+                  event={event}
                   open={commentOpen}
                   handleClose={handleCommentClose}
                 ></CommentModal>

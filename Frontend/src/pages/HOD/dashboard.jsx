@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { eventState } from "../../context/eventProvider";
 import PendingProposals from "./drawerPages/pendingProposals";
+import Finance from "./drawerPages/Finance";
 
 const HodDashboard = () => {
   
@@ -58,6 +59,7 @@ const HodDashboard = () => {
         {activePage === "proposal" && <Proposals />}
         {activePage === "approved" && <ApprovedEvents />}
         {activePage === "pendingProposal" && <PendingProposals/>}
+        {activePage === "finance" && <Finance/>}
       </Box>
     </Box>
   );
