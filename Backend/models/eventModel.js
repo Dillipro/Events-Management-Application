@@ -72,6 +72,10 @@ const eventSchema = mongoose.Schema(
       ref: "User",
     },
 
+    reviewComments: {
+      type: String,
+    },
+
     targetAudience: {
       type: [String],
       required: true,
