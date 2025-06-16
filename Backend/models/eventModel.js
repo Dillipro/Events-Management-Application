@@ -76,6 +76,14 @@ const eventSchema = mongoose.Schema(
       type: String,
     },
 
+    coordinators: [
+      {
+        name: String,
+        designation: String,
+        department: String,
+      },
+    ],
+
     targetAudience: {
       type: [String],
       required: true,
