@@ -8,6 +8,19 @@ import { getMonthName, getYear } from "./dateUtils";
 import { getDate } from "./getDate";
 import { getTargetAudience, getResourcePersons } from "./getUserDetails";
 
+const styles = {
+  standard: {
+    fontFamily: "Times New Roman",
+    maxWidth: "650px",
+    fontSize: "18px",
+  },
+  bold: {
+    fontWeight: "bold",
+    fontFamily: "Times New Roman",
+    fontSize: "18px",
+  },
+};
+
 const ProposalLetter = ({ event, activePage, setActivePage }) => {
   const date = new Date();
   const { selectedEvent, setSelectedEvent } = useContext(SelectedEventContext);
@@ -61,6 +74,10 @@ const ProposalLetter = ({ event, activePage, setActivePage }) => {
         <ArrowBackIcon></ArrowBackIcon>
       </IconButton>
 
+      <Button variant="outlined" onClick={generatePDF}>
+        Download PDF
+      </Button>
+
       <Box>
         <Box
           ref={pdfRef}
@@ -76,8 +93,8 @@ const ProposalLetter = ({ event, activePage, setActivePage }) => {
           sx={{
             mt: 6,
             "& .MuiTypography-root": {
-            fontSize: "18px", // or any size like "1.2rem"
-    },
+              fontSize: "18px",
+            },
           }}
         >
           <Typography
@@ -245,11 +262,14 @@ const ProposalLetter = ({ event, activePage, setActivePage }) => {
           <br></br>
           <br></br>
 
-          <table border="1px" style={{ 
-            width: "630px",
-            textAlign: "left",
-            borderCollapse: "collapse",
-            }}>
+          <table
+            border="1px"
+            style={{
+              width: "630px",
+              textAlign: "left",
+              borderCollapse: "collapse",
+            }}
+          >
             <colgroup>
               <col style={{ width: "10%" }} />
               <col style={{ width: "50%" }} />
@@ -257,21 +277,21 @@ const ProposalLetter = ({ event, activePage, setActivePage }) => {
             </colgroup>
             <thead>
               <tr>
-                <th style={{padding: "4px"}}>Sl. No.</th>
-                <th >Category </th>
-                <th >Registration Fee </th>
+                <th style={{ padding: "4px" }}>Sl. No.</th>
+                <th>Category </th>
+                <th>Registration Fee </th>
               </tr>
             </thead>
             <tbody>
-              {
-                selectedEvent.registrationFees.map((item, index) => (
-                  <tr key={index}>
-                    <td style={{padding: "4px"}}>{index+1}.</td>
-                    <td style={{padding: "4px"}}>{item.category}</td>
-                    <td style={{padding: "4px"}}>Rs.{item.amount}/- + {item.gstPercentage}%GST</td>
-              </tr>
-                ))
-              }
+              {selectedEvent.registrationFees.map((item, index) => (
+                <tr key={index}>
+                  <td style={{ padding: "4px" }}>{index + 1}.</td>
+                  <td style={{ padding: "4px" }}>{item.category}</td>
+                  <td style={{ padding: "4px" }}>
+                    Rs.{item.amount}/- + {item.gstPercentage}%GST
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <br></br>
@@ -284,15 +304,252 @@ const ProposalLetter = ({ event, activePage, setActivePage }) => {
               maxWidth: "650px",
             }}
           >
-            Hence, it is kindly requested that permission may be given to conduct the training
-            programme and the registration fees may be collected in the form of Demand Draft / Online
-            payment favouring "The Director, CSRC, Anna University, Chennai".
+            Hence, it is kindly requested that permission may be given to
+            conduct the training programme and the registration fees may be
+            collected in the form of Demand Draft / Online payment favouring
+            "The Director, CSRC, Anna University, Chennai".
+          </Typography>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <Box
+            sx={{
+              fontFamily: "Times New Roman",
+              display: "flex",
+              justifyContent: "space-around",
+              width: "800px",
+            }}
+          >
+            <b
+              sx={{
+                fontFamily: "Times New Roman",
+                maxWidth: "650px",
+                fontSize: "18px",
+              }}
+            >
+              Co-ordinator(s)
+            </b>
+            <b
+              sx={{
+                fontFamily: "Times New Roman",
+                maxWidth: "650px",
+                fontSize: "18px",
+              }}
+            >
+              HoD, DCSE
+            </b>
+            <b
+              sx={{
+                fontFamily: "Times New Roman",
+                maxWidth: "650px",
+                fontSize: "18px",
+              }}
+            >
+              Director, CCS
+            </b>
+            <b
+              sx={{
+                fontFamily: "Times New Roman",
+                maxWidth: "650px",
+                fontSize: "18px",
+              }}
+            >
+              Director, CSRC
+            </b>
+            <b
+              sx={{
+                fontFamily: "Times New Roman",
+                maxWidth: "650px",
+                fontSize: "18px",
+              }}
+            >
+              REGISTRAR
+            </b>
+          </Box>
+          <Box
+            sx={{
+              mt: "4px",
+            }}
+          >
+            {selectedEvent.coordinators.map((item, index) => (
+              <ul
+                key={index}
+                style={{
+                  margin: "0px",
+                  paddingLeft: "10px",
+                }}
+              >
+                {item.name}
+              </ul>
+            ))}
+          </Box>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              <Typography sx={styles.standard}>Dr. S. Usa </Typography>
+              <Typography sx={styles.standard}>
+                Professor and Chairperson
+              </Typography>
+              <Typography sx={styles.standard}>
+                Faculty of Electrical Engg.,
+              </Typography>
+              <Typography sx={styles.standard}>
+                Anna University, Chennai - 25.
+              </Typography>
+              <b style={styles.bold}>(Member)</b>
+            </Box>
+            <Box>
+              <Typography sx={styles.standard}>
+                Commissioner of Technical Education
+              </Typography>
+              <Typography sx={styles.standard}>
+                {" "}
+                Directorate of Technical Education,
+              </Typography>
+              <Typography sx={styles.standard}>
+                {" "}
+                Government of Tamil Nadu.
+              </Typography>
+              <b style={styles.bold}>(Member)</b>
+            </Box>
+          </Box>
+
+          <Typography
+            sx={{
+              fontFamily: "Times New Roman",
+              fontSize: "18px",
+              textAlign: "center",
+              pt: 12,
+              mt: 10,
+            }}
+          >
+            <b>APPROVED / NOT APPROVED</b>
           </Typography>
 
+          <Typography
+            sx={{
+              fontFamily: "Times New Roman",
+              fontSize: "18px",
+              textAlign: "center",
+              pt: 16,
+              mt: 10,
+            }}
+          >
+            <b>CHAIRMAN</b>
+          </Typography>
+
+          <Typography
+            sx={{
+              fontFamily: "Times New Roman",
+              fontSize: "18px",
+              textAlign: "center",
+            }}
+          >
+            <b>Convenor Committee, Anna University</b>
+          </Typography>
+
+          <Box
+            sx={{
+              mt: 45,
+            }}
+          >
+            <Typography sx={styles.bold} textAlign="center">
+              <b>TENTATIVE BUDGET</b>
+            </Typography>
+
+            <table
+              border="1"
+              cellSpacing="0"
+              cellPadding="8"
+              style={{
+                borderCollapse: "collapse",
+                textAlign: "left",
+                width: "100%",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>
+                    <b>Income</b>
+                  </th>
+                  <th>
+                    <b>Expenditure</b>
+                  </th>
+                  <th>
+                    <b>Amount (Rs.)</b>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowSpan="4">
+                    Registration fee
+                    <br />
+                    = 30 × Rs. 944
+                    <br />= Rs. 28,320/-
+                  </td>
+                  <td>Honorarium</td>
+                  <td>16,500</td>
+                </tr>
+                <tr>
+                  <td>Stationery and Refreshments</td>
+                  <td>300</td>
+                </tr>
+                <tr>
+                  <td>University Overhead 30%</td>
+                  <td>{selectedEvent.budgetBreakdown.universityOverhead}</td>
+                </tr>
+                <tr>
+                  <td>GST</td>
+                  <td>{selectedEvent.budgetBreakdown.gstAmount}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Total</b>
+                  </td>
+                  <td></td>
+                  <td>
+                    <b>{selectedEvent.budgetBreakdown.totalExpenditure}</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Box>
+
+          <Typography sx={styles.standard} marginTop="26px">
+            The above budget is tentative. This may vary depending on the number
+            of participants attending the program.
+          </Typography>
+
+          <Typography sx={styles.bold} textAlign="center" marginTop="60px">
+            HoD, DCSE & Director, CCS
+          </Typography>
         </Box>
-        <Button variant="outlined" onClick={generatePDF}>
-          Download PDF
-        </Button>
       </Box>
     </Box>
   );
