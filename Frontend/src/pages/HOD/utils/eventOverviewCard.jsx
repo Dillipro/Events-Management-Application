@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { eventState } from "../../../context/eventProvider";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -14,20 +14,28 @@ import CommentModal from "./commentModal";
 import DownloadPDF from "./downloadEventDetails";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { SelectedEventContext } from "../dashboard";
 
-const EventOverviewCard = ({ event }) => {
+const EventOverviewCard = ({ event, activePage, setActivePage }) => {
+
+  const {selectedEvent, setSelectedEvent} = useContext(SelectedEventContext); 
   const { user, events, setEvents } = eventState();
   const [open, setOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleClose = () => setOpen(false);
+  const handleCommentOpen = () => setCommentOpen(true);
+  const handleCommentClose = () => setCommentOpen(false);
+
   function handleOpen() {
     setOpen(true);
   }
-  const handleClose = () => setOpen(false);
 
-  const handleCommentOpen = () => setCommentOpen(true);
-  const handleCommentClose = () => setCommentOpen(false);
+  function handleProposalLetterView(){
+    setActivePage('proposalLetterView');
+    setSelectedEvent(event);
+  }
 
   function approveEvent(id) {
     const token = localStorage.getItem("token");
@@ -309,13 +317,16 @@ const EventOverviewCard = ({ event }) => {
                 ></CommentIcon>
               </IconButton>
 
-              <IconButton onClick={() => DownloadPDF(eventData)}>
-                <DownloadIcon
-                  sx={{
-                    color: "rgb(73, 73, 74)",
-                  }}
-                ></DownloadIcon>
-              </IconButton>
+              <Button
+                variant="contained"
+                sx={{
+                  padding:0,
+                  textTransform: "none",
+                }}
+                onClick={handleProposalLetterView}
+              >
+                proposal
+              </Button>
 
               <ViewContentModal
                 event={event}
@@ -348,13 +359,16 @@ const EventOverviewCard = ({ event }) => {
                 ></CommentIcon>
               </IconButton>
 
-              <IconButton onClick={() => DownloadPDF(eventData)}>
-                <DownloadIcon
-                  sx={{
-                    color: "rgb(73, 73, 74)",
-                  }}
-                ></DownloadIcon>
-              </IconButton>
+              <Button
+                variant="contained"
+                sx={{
+                  padding:0,
+                  textTransform: "none",
+                }}
+                onClick={handleProposalLetterView}
+              >
+                proposal
+              </Button>
 
               <ViewContentModal
                 event={event}
@@ -390,13 +404,16 @@ const EventOverviewCard = ({ event }) => {
                   ></CommentIcon>
                 </IconButton>
 
-                <IconButton onClick={() => DownloadPDF(eventData)}>
-                  <DownloadIcon
-                    sx={{
-                      color: "rgb(73, 73, 74)",
-                    }}
-                  ></DownloadIcon>
-                </IconButton>
+                <Button
+                variant="contained"
+                sx={{
+                  padding:0,
+                  textTransform: "none",
+                }}
+                onClick={handleProposalLetterView}
+              >
+                proposal
+              </Button>
 
                 <ViewContentModal
                   event={event}

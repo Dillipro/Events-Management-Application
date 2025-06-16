@@ -38,8 +38,6 @@ const spanStyle = {
 
 function ViewContentModal({ event, open, handleClose }) {
 
-  console.log(event.registrationFees);
-
   function getTargetAudience(){
     const audience = event.targetAudience;
 

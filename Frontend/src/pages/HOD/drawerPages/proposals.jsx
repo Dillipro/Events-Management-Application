@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { eventState } from "../../../context/eventProvider";
 import EventOverviewCard from "../utils/eventOverviewCard";
-const Proposals = () => {
+const Proposals = ({activePage, setActivePage}) => {
 
   const {user, events, setEvents} = eventState();
 
@@ -123,8 +123,9 @@ const Proposals = () => {
             <EventOverviewCard 
               key={event._id}
               event={event}
+              activePage={activePage}
+              setActivePage={setActivePage}
             >
-
             </EventOverviewCard>
           ))
           }
