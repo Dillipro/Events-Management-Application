@@ -7,6 +7,26 @@ import encrypt from "../../../../passwordManager/encryption.js";
 let passwordResetRequests = [];
 let requestIdCounter = 1;
 
+// Dummy data for demonstration
+const dummyRequests = [
+  {
+    id: 'dummy-1',
+    email: 'john.doe@student.edu',
+    role: 'student',
+    userName: 'John Doe',
+    requestedAt: new Date('2024-08-01T10:00:00Z').toISOString(),
+    status: 'pending'
+  },
+  {
+    id: 'dummy-2', 
+    email: 'jane.smith@faculty.edu',
+    role: 'faculty',
+    userName: 'Dr. Jane Smith',
+    requestedAt: new Date('2024-08-02T14:30:00Z').toISOString(),
+    status: 'pending'
+  }
+];
+
 export const forgotPasswordDummy = async (req, res) => {
   const { email, role } = req.body;
 
@@ -68,6 +88,11 @@ export const forgotPasswordDummy = async (req, res) => {
 // Dummy admin functions for future implementation
 export const getPasswordResetRequests = async (req, res) => {
   try {
+    // Ensure passwordResetRequests is initialized
+    if (!passwordResetRequests) {
+      passwordResetRequests = [];
+    }
+    
     // Return actual stored requests plus some dummy data for demo
     const actualRequests = passwordResetRequests.map(request => ({
       ...request,

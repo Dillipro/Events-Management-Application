@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/api";
 import jsPDF from "jspdf";
 import "../../styles/CertificatePage.css";
 
@@ -12,11 +12,7 @@ const CertificatePage = () => {
       const user = JSON.parse(localStorage.getItem("userInfo")); // assumes your user info has ID
       const token = localStorage.getItem("token");
 
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api'}/participant/my-certificates/${user._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const res = await api.get(`/participant/my-certificates/${user._id}`);
       setEvents(res.data);
     } catch (err) {
       alert("Failed to fetch eligible events");

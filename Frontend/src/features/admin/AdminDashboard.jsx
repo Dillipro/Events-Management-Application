@@ -55,7 +55,7 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import axios from 'axios';
+import api from '../../utils/api';
 import PasswordResetRequestsAdmin from './PasswordResetRequestsAdmin.jsx';
 
 const AdminDashboard = () => {
@@ -109,18 +109,10 @@ const AdminDashboard = () => {
     try {
       setLoading(true);
       const [statsRes, usersRes, eventsRes, passwordResetRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/dashboard/stats`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/events`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/password-reset-requests`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }).catch(() => ({ data: { requests: [] } })) // Fallback if endpoint doesn't exist
+        api.get('/admin/dashboard/stats'),
+        api.get('/admin/users'),
+        api.get('/admin/events'),
+        api.get('/admin/password-reset-requests').catch(() => ({ data: { requests: [] } })) // Fallback if endpoint doesn't exist
       ]);
 
       setStats(statsRes.data);

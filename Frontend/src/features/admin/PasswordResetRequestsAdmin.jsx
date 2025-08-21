@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/api';
 import {
   Container,
   Typography,
@@ -41,9 +41,7 @@ const PasswordResetRequestsAdmin = () => {
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api'}/admin/password-reset-requests`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get('/admin/password-reset-requests');
       setRequests(response.data.requests || []);
     } catch (error) {
       console.error('Error fetching requests:', error);
@@ -57,11 +55,9 @@ const PasswordResetRequestsAdmin = () => {
   const handleApprove = async (requestId) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api'}/admin/password-reset-requests/${requestId}/approve`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+const response = await api.post(
+  `/admin/password-reset-requests/${requestId}/approve`
+);
       
       // Update local state
       setRequests(prev => prev.map(req => 
@@ -90,32 +86,24 @@ const PasswordResetRequestsAdmin = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api'}/admin/password-reset-requests/${rejectDialog.requestId}/reject`,
-        { reason: rejectReason },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      
-      // Update local state
-      setRequests(prev => prev.map(req => 
-        req.id === rejectDialog.requestId 
-          ? { ...req, status: 'rejected', processedAt: new Date().toISOString(), reason: rejectReason }
-          : req
-      ));
-      
-      setRejectDialog({ open: false, requestId: null });
-      setRejectReason('');
-      alert(response.data.message || 'Password reset request rejected.');
-      
-      // Refresh data to get latest state
-      fetchRequests();
-    } catch (error) {
-      console.error('Error rejecting request:', error);
-      alert(error.response?.data?.message || 'Error rejecting request');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const response = await api.post(
+      `/admin/password-reset-requests/${rejectDialog.requestId}/reject`,
+      { reason: rejectReason }
+    );
+    
+    setRejectDialog({ open: false, requestId: null });
+    setRejectReason('');
+    alert(response.data.message || 'Password reset request rejected.');
+    
+    // Refresh data to get latest state
+    fetchRequests();
+  } catch (error) {
+    console.error('Error rejecting request:', error);
+    alert(error.response?.data?.message || 'Error rejecting request');
+  } finally {
+    setLoading(false);
+  }
+};
     
 
   const getStatusColor = (status) => {

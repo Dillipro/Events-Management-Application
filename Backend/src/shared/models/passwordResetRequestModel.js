@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
-const passwordResetRequestSchema = mongoose.Schema(
-  {
+const passwordResetRequestSchema = new mongoose.Schema({
     email: {
       type: String,
       required: true,
@@ -14,6 +13,11 @@ const passwordResetRequestSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     status: {
       type: String,
       enum: ['pending', 'approved', 'rejected'],
@@ -24,8 +28,7 @@ const passwordResetRequestSchema = mongoose.Schema(
       default: Date.now
     },
     processedAt: {
-      type: Date,
-      default: null
+      type: Date
     },
     processedBy: {
       type: String, // Admin email who processed the request
